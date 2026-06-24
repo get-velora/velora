@@ -9,9 +9,12 @@
     User, 
     ArrowRight,
     Search,
-    BookOpen
+    BookOpen,
+    X,
+    ChevronDown
   } from 'lucide-svelte';
   import { onDestroy } from 'svelte';
+  import { slide } from 'svelte/transition';
 
   // =================================================================
   // 1. SCALABLE DATA STRUCTURE
@@ -90,7 +93,7 @@
       id: "node-5", 
       title: "Fall Semester Map", 
       description: "Map out your fall semester course load. Selective universities expect STEM majors to show calculus readiness.",
-      status: "current", // Active Node (Yellow)
+      status: "current", // Active Node
       level: 5,
       position: "center", 
       icon: Sparkles
@@ -183,6 +186,22 @@
 
   // Derived concrete array of numeric levels for robust compiler rendering loops
   const levels = $derived(Array.from({ length: maxLevel }, (_, i) => i));
+
+  // Welcome panel state & calculations
+  let showWelcomeBanner = $state(true);
+  const currentHour = new Date().getHours();
+  const greeting = $derived(
+    currentHour < 12 
+      ? "Rise and shine, Pathfinder" 
+      : "Hey Pathfinder, ready to dive into this?"
+  );
+
+  const completedCount = $derived(nodes.filter(n => n.status === 'completed').length);
+  const totalCount = nodes.length;
+  const progressPercent = $derived(Math.round((completedCount / totalCount) * 100));
+  const nextMilestone = $derived(
+    nodes.find(n => n.level === currentNode.level + 1 && n.position === 'center')?.title || 'N/A'
+  );
 
   // Maps a node's level & position to exact X/Y coordinates
   function getCoordinates(level: number, position: string) {
@@ -487,6 +506,70 @@
   <!-- Relative container acts as wrapper for viewport scroll container and scrollbar -->
   <div class="flex-1 h-[55vh] md:h-full relative flex flex-col border-b md:border-b-0 md:border-r border-white/10 shrink-0 md:shrink">
     
+    <!-- Floating Expand Button (Sensible floating trigger when closed, avoiding full row waste) -->
+    {#if !showWelcomeBanner}
+      <button 
+        onclick={() => showWelcomeBanner = true}
+        class="absolute top-4 left-1/2 -translate-x-1/2 z-50 h-8 w-8 rounded-full bg-black/90 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-zinc-100 flex items-center justify-center transition-all shadow-lg shadow-black/40 backdrop-blur-md focus:outline-none"
+        aria-label="Expand Overview"
+      >
+        <ChevronDown class="w-4 h-4" />
+      </button>
+    {/if}
+
+    <!-- Dashboard Welcome Banner (Glass container with masked progressive shadow/blur projection) -->
+    {#if showWelcomeBanner}
+      <div 
+        transition:slide={{ duration: 320 }}
+        class="w-full h-auto md:h-[30%] min-h-[195px] bg-black/90 backdrop-blur-md border-b border-white/10 p-6 flex flex-col justify-between relative z-40 shrink-0 shadow-[0_12px_40px_rgba(0,0,0,0.85)]"
+      >
+        <!-- Seamless progressive blur projection overlay -->
+        <div class="absolute left-0 right-0 top-full h-32 bg-gradient-to-b from-black/80 via-black/20 to-transparent backdrop-blur-[8px] pointer-events-none z-30" style="mask-image: linear-gradient(to bottom, black 0%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);"></div>
+
+        <!-- Dismiss Button -->
+        <button 
+          onclick={() => showWelcomeBanner = false}
+          class="absolute top-4 right-4 text-zinc-500 hover:text-zinc-200 transition-colors p-1.5 hover:bg-white/5 rounded-md focus:outline-none"
+          aria-label="Dismiss panel"
+        >
+          <X class="w-4 h-4" />
+        </button>
+
+        <!-- Message Block -->
+        <div class="space-y-1.5 max-w-xl pr-6">
+          <h1 class="text-base md:text-lg font-medium tracking-tight text-zinc-100">
+            {greeting}
+          </h1>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Your high school curriculum milestones are calibrated to the <span class="text-zinc-200 font-medium">STEM Focus Track</span>. Review your target milestones below to maintain cumulative safety benchmarks.
+          </p>
+        </div>
+
+        <!-- Integrated Secondary Information Grid -->
+        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5 mt-3">
+          <div class="space-y-1">
+            <span class="block text-[9px] uppercase tracking-wider text-zinc-500 font-mono">Current Progress</span>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-sm font-semibold text-zinc-200">{progressPercent}%</span>
+              <span class="text-[9px] text-zinc-500 font-mono">({completedCount}/{totalCount})</span>
+            </div>
+          </div>
+          <div class="space-y-1 border-l border-white/5 pl-4">
+            <span class="block text-[9px] uppercase tracking-wider text-zinc-500 font-mono">Active Target</span>
+            <span class="block text-xs font-medium text-white truncate max-w-full">
+              {currentNode.title}
+            </span>
+          </div>
+          <div class="space-y-1 border-l border-white/5 pl-4">
+            <span class="block text-[9px] uppercase tracking-wider text-zinc-500 font-mono">Next Up</span>
+            <span class="block text-xs font-medium text-zinc-300 truncate max-w-full">
+              {nextMilestone}
+            </span>
+          </div>
+        </div>
+      </div>
+    {/if}
+
     <div 
       bind:this={viewportContainer}
       onscroll={handleScroll}
@@ -592,7 +675,7 @@
             <!-- Under-node title labeling -->
             <span class="mt-2 text-[8px] font-semibold tracking-tight uppercase select-none text-center leading-tight max-w-[100px]
               {node.status === 'completed' ? 'text-emerald-500/80' : ''}
-              {node.status === 'current' ? 'text-amber-400 font-bold' : ''}
+              {node.status === 'current' ? 'text-zinc-100 font-bold' : ''}
               {possible ? 'text-amber-400/80 font-medium' : ''}
               {node.status === 'upcoming' && !possible ? 'text-zinc-600' : ''}">
               {node.title}
@@ -644,7 +727,7 @@
             ● Completed
           </span>
         {:else if selectedNode.status === 'current'}
-          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-mono tracking-wider text-amber-400 bg-amber-950/40 border border-amber-900 px-2.5 py-0.5 rounded-full animate-pulse">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-mono tracking-wider text-zinc-100 bg-zinc-900 border border-zinc-850 px-2.5 py-0.5 rounded-full animate-pulse">
             ▲ Active Focus
           </span>
         {:else if isPossibleToComplete(selectedNode)}
