@@ -1,15 +1,32 @@
+<!-- src/components/LeftBar.svelte -->
 <script lang="ts">
   import { LayoutDashboard, User, Bell, Settings } from 'lucide-svelte';
 </script>
 
 <!-- 
-  - We changed `py-4` to `pt-3 pb-2` to maximize the vertical stretch and drop Settings to the absolute bottom.
+  We use inline styles to guarantee the display, flex direction, 
+  and full viewport height render directly in the browser.
 -->
 <aside 
-  class="h-full w-10 hover:w-56 bg-black border-r border-white/10 flex flex-col items-center justify-between pt-3 pb-2 transition-all duration-300 ease-in-out overflow-hidden shrink-0 group relative z-40"
+  class="w-10 hover:w-56 bg-black border-r border-white/10 transition-all duration-300 ease-in-out overflow-hidden shrink-0 group relative z-40"
+  style="height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding-top: 12px; padding-bottom: 8px;"
 >
   
-  <!-- Top Section: Navigation Links -->
+  <!-- 1. TOP SECTION: Branding Logo & Name -->
+  <div class="w-full px-1" style="flex-shrink: 0;">
+    <div class="flex items-center gap-3.5 h-10 w-full px-2 shrink-0 select-none">
+      <div class="h-5 w-5 bg-zinc-100 text-black flex items-center justify-center font-bold text-xs rounded-sm shrink-0">
+        V
+      </div>
+      <span class="text-sm font-semibold tracking-tight text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-100 whitespace-nowrap">
+        Velora
+      </span>
+    </div>
+  </div>
+
+  <!-- 2. MIDDLE SECTION: Navigation Links 
+       This section stays grouped together vertically in the center
+  -->
   <div class="w-full flex flex-col gap-2 px-1">
     
     <!-- Dashboard Link -->
@@ -47,8 +64,8 @@
 
   </div>
 
-  <!-- Bottom Section: Settings Link -->
-  <div class="w-full px-1">
+  <!-- 3. BOTTOM SECTION: Settings Link -->
+  <div class="w-full px-1" style="flex-shrink: 0;">
     <a 
       href="#settings" 
       class="flex items-center gap-3.5 h-8 w-full rounded-md hover:bg-zinc-900/60 text-zinc-400 hover:text-zinc-100 transition-colors px-2"
