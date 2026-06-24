@@ -570,148 +570,138 @@
       </div>
     {/if}
 
-    <div 
-      bind:this={viewportContainer}
-      onscroll={handleScroll}
-      onmousemove={handleMouseMove}
-      onmouseleave={handleMouseLeave}
-      class="w-full h-full overflow-y-auto overflow-x-hidden flex flex-col items-center py-12 select-none scroll-smooth hide-scrollbar"
-    >
+    <!-- 
+      Isolated Scroll Viewport Wrapper:
+      Ensures the custom scrollbar track matches the exact physical bounds of the scrollable container.
+    -->
+    <div class="flex-1 min-h-0 relative w-full flex flex-col z-10">
       
-      <!-- 
-        The Map Canvas Box:
-        - We removed CSS transitions from this container to prevent it from colliding with our JS LERP loop.
-      -->
       <div 
-        class="relative z-10 will-change-transform" 
-        style="
-          width: {mapWidth}px; 
-          height: {mapHeight}px;
-          transform: translate3d({panX}px, {panY}px, 0);
-        "
+        bind:this={viewportContainer}
+        onscroll={handleScroll}
+        onmousemove={handleMouseMove}
+        onmouseleave={handleMouseLeave}
+        class="w-full h-full overflow-y-auto overflow-x-hidden flex flex-col items-center py-12 select-none scroll-smooth hide-scrollbar"
       >
         
-        <!-- Standard, Solid, Perpendicular Connecting Lines (SVG with explicit viewBox sizing to prevent layout clipping) -->
-        <svg 
-          class="absolute inset-0 pointer-events-none z-0" 
-          width={mapWidth} 
-          height={mapHeight} 
-          viewBox="0 0 {mapWidth} {mapHeight}"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+        <!-- The Map Canvas Box -->
+        <div 
+          class="relative z-10 will-change-transform" 
+          style="
+            width: {mapWidth}px; 
+            height: {mapHeight}px;
+            transform: translate3d({panX}px, {panY}px, 0);
+          "
         >
           
-          <!-- Standard Main Trunk Connections (Uniform lock-style design for all segments) -->
-          {#each levels as level}
-            {@const coordsStart = getCoordinates(level, 'center')}
-            {@const coordsEnd = getCoordinates(level + 1, 'center')}
-            <line 
-              x1={coordsStart.x} 
-              y1={coordsStart.y} 
-              x2={coordsEnd.x} 
-              y2={coordsEnd.y} 
-              stroke="rgba(255, 255, 255, 0.12)" 
-              stroke-width="2" 
-              stroke-linecap="round"
-            />
-          {/each}
-
-          <!-- Standard Horizontal Branch Connections (Uniform lock-style design for all branches) -->
-          {#each nodes as node}
-            {#if node.position !== 'center'}
-              {@const coords = getCoordinates(node.level, node.position)}
+          <!-- Standard, Solid, Perpendicular Connecting Lines -->
+          <svg 
+            class="absolute inset-0 pointer-events-none z-0" 
+            width={mapWidth} 
+            height={mapHeight} 
+            viewBox="0 0 {mapWidth} {mapHeight}"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {#each levels as level}
+              {@const coordsStart = getCoordinates(level, 'center')}
+              {@const coordsEnd = getCoordinates(level + 1, 'center')}
               <line 
-                x1={mapWidth / 2} 
-                y1={coords.y} 
-                x2={coords.x} 
-                y2={coords.y} 
+                x1={coordsStart.x} 
+                y1={coordsStart.y} 
+                x2={coordsEnd.x} 
+                y2={coordsEnd.y} 
                 stroke="rgba(255, 255, 255, 0.12)" 
                 stroke-width="2" 
                 stroke-linecap="round"
               />
-            {/if}
-          {/each}
-          
-        </svg>
+            {/each}
 
-        <!-- Algorithmic Node Renderer -->
-        {#each nodes as node}
-          <!-- Coordinates are mapped dynamically on render -->
-          {@const coords = getCoordinates(node.level, node.position)}
-          {@const possible = isPossibleToComplete(node)}
+            {#each nodes as node}
+              {#if node.position !== 'center'}
+                {@const coords = getCoordinates(node.level, node.position)}
+                <line 
+                  x1={mapWidth / 2} 
+                  y1={coords.y} 
+                  x2={coords.x} 
+                  y2={coords.y} 
+                  stroke="rgba(255, 255, 255, 0.12)" 
+                  stroke-width="2" 
+                  stroke-linecap="round"
+                />
+              {/if}
+            {/each}
+          </svg>
 
-          <div 
-            class="absolute flex flex-col items-center w-28 -translate-x-14"
-            style="left: {coords.x}px; top: {coords.y - 28}px;"
-          >
-            <!-- Circular Node Button -->
-            <button
-              onclick={() => selectedNode = node}
-              class="relative h-14 w-14 rounded-full flex items-center justify-center border transition-all duration-300 focus:outline-none z-20 shadow-lg
-                {node.id === selectedNode.id ? 'scale-110' : 'hover:scale-105'}
-                {node.status === 'completed' ? 'bg-emerald-500 border-emerald-400 text-white shadow-emerald-950/40' : ''}
-                {node.status === 'current' ? 'bg-amber-400 text-black border-amber-300 shadow-amber-400/25 shadow-xl' : ''}
-                {possible ? 'bg-zinc-950 border-amber-400 text-amber-400 hover:bg-[#181611] hover:border-amber-300 shadow-amber-400/5 shadow-md' : ''}
-                {node.status === 'upcoming' && !possible ? 'bg-zinc-950 border-zinc-850 text-zinc-600 hover:border-zinc-700' : ''}"
-              aria-label="View node: {node.title}"
+          <!-- Algorithmic Node Renderer -->
+          {#each nodes as node}
+            {@const coords = getCoordinates(node.level, node.position)}
+            {@const possible = isPossibleToComplete(node)}
+
+            <div 
+              class="absolute flex flex-col items-center w-28 -translate-x-14"
+              style="left: {coords.x}px; top: {coords.y - 28}px;"
             >
-              
-              <!-- Outer Pulsing Glow (Kept strictly on primary focus node) -->
-              {#if node.status === 'current'}
-                <span class="absolute inset-0 rounded-full bg-amber-400/25 animate-gentle-pulse pointer-events-none"></span>
-              {/if}
+              <!-- Circular Node Button -->
+              <button
+                onclick={() => selectedNode = node}
+                class="relative h-14 w-14 rounded-full flex items-center justify-center border transition-all duration-300 focus:outline-none z-20 shadow-lg
+                  {node.id === selectedNode.id ? 'scale-110' : 'hover:scale-105'}
+                  {node.status === 'completed' ? 'bg-emerald-500 border-emerald-400 text-white shadow-emerald-950/40' : ''}
+                  {node.status === 'current' ? 'bg-amber-400 text-black border-amber-300 shadow-amber-400/25 shadow-xl' : ''}
+                  {possible ? 'bg-zinc-950 border-amber-400 text-amber-400 hover:bg-[#181611] hover:border-amber-300 shadow-amber-400/5 shadow-md' : ''}
+                  {node.status === 'upcoming' && !possible ? 'bg-zinc-950 border-zinc-850 text-zinc-600 hover:border-zinc-700' : ''}"
+                aria-label="View node: {node.title}"
+              >
+                {#if node.status === 'current'}
+                  <span class="absolute inset-0 rounded-full bg-amber-400/25 animate-gentle-pulse pointer-events-none"></span>
+                {/if}
 
-              <!-- Icon Logic (Completed has check, available/current has specific icon, locked has lock icon) -->
-              {#if node.status === 'completed'}
-                <Check class="w-5 h-5 stroke-[2.5]" />
-              {:else if possible || node.status === 'current'}
-                <svelte:component this={node.icon} class="w-5 h-5 stroke-[2.5]" />
-              {:else}
-                <Lock class="w-4 h-4 stroke-[2]" />
-              {/if}
+                {#if node.status === 'completed'}
+                  <Check class="w-5 h-5 stroke-[2.5]" />
+                {:else if possible || node.status === 'current'}
+                  <svelte:component this={node.icon} class="w-5 h-5 stroke-[2.5]" />
+                {:else}
+                  <Lock class="w-4 h-4 stroke-[2]" />
+                {/if}
+              </button>
 
-            </button>
+              <!-- Under-node title labeling -->
+              <span class="mt-2 text-[8px] font-semibold tracking-tight uppercase select-none text-center leading-tight max-w-[100px]
+                {node.status === 'completed' ? 'text-emerald-500/80' : ''}
+                {node.status === 'current' ? 'text-zinc-100 font-bold' : ''}
+                {possible ? 'text-amber-400/80 font-medium' : ''}
+                {node.status === 'upcoming' && !possible ? 'text-zinc-600' : ''}">
+                {node.title}
+              </span>
+            </div>
+          {/each}
 
-            <!-- Under-node title labeling -->
-            <span class="mt-2 text-[8px] font-semibold tracking-tight uppercase select-none text-center leading-tight max-w-[100px]
-              {node.status === 'completed' ? 'text-emerald-500/80' : ''}
-              {node.status === 'current' ? 'text-zinc-100 font-bold' : ''}
-              {possible ? 'text-amber-400/80 font-medium' : ''}
-              {node.status === 'upcoming' && !possible ? 'text-zinc-600' : ''}">
-              {node.title}
-            </span>
-
-          </div>
-        {/each}
+        </div>
 
       </div>
 
-    </div>
+      <!-- Custom Scrollbar Track & Capsule Thumb integrated within the isolated viewport container boundaries -->
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <div 
+        class="absolute right-0 top-1 bottom-1 w-[2px] z-30 pointer-events-auto cursor-pointer"
+        onclick={handleTrackClick}
+        onmouseenter={() => isHoveringScrollbar = true}
+        onmouseleave={() => isHoveringScrollbar = false}
+        role="presentation"
+      >
+        {#if thumbHeight > 0}
+          <div 
+            role="scrollbar"
+            aria-controls="viewport-container"
+            aria-valuenow={scrollTop}
+            class="absolute right-[0.5px] bg-white rounded-full hover:bg-zinc-200 active:bg-zinc-300 transition-opacity duration-300"
+            style="top: {thumbTop}px; height: {thumbHeight}px; width: 1.4px; opacity: {showScrollbar ? 1 : 0}; pointer-events: {showScrollbar ? 'auto' : 'none'};"
+            onmousedown={handleThumbMouseDown}
+          ></div>
+        {/if}
+      </div>
 
-    <!-- Custom Scrollbar Track & Capsule Thumb integrated on divider line (Width reduced to 2px) -->
-    <!-- svelte-ignore a11y_click_events_have_key_events -->
-    <div 
-      class="absolute right-0 top-1 bottom-1 w-[2px] z-30 pointer-events-auto cursor-pointer"
-      onclick={handleTrackClick}
-      onmouseenter={() => isHoveringScrollbar = true}
-      onmouseleave={() => isHoveringScrollbar = false}
-      role="presentation"
-    >
-      {#if thumbHeight > 0}
-        <!-- 
-          The Custom Scrollbar Thumb:
-          - transition-opacity is applied to fade smoothly, preventing position lags.
-          - Exact sizing and position metrics are bound inline with style attributes.
-        -->
-        <div 
-          role="scrollbar"
-          aria-controls="viewport-container"
-          aria-valuenow={scrollTop}
-          class="absolute right-[0.5px] bg-white rounded-full hover:bg-zinc-200 active:bg-zinc-300 transition-opacity duration-300"
-          style="top: {thumbTop}px; height: {thumbHeight}px; width: 1.4px; opacity: {showScrollbar ? 1 : 0}; pointer-events: {showScrollbar ? 'auto' : 'none'};"
-          onmousedown={handleThumbMouseDown}
-        ></div>
-      {/if}
     </div>
 
   </div>
