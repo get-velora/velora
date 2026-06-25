@@ -6,11 +6,12 @@
 
   let { children } = $props();
 
-  // Updated to include /colleges
+  // Added /calendar to the check
   const isAppRoute = $derived(
     page.url.pathname.startsWith('/map') || 
     page.url.pathname.startsWith('/activities') ||
-    page.url.pathname.startsWith('/colleges')
+    page.url.pathname.startsWith('/colleges') ||
+    page.url.pathname.startsWith('/calendar')
   );
 </script>
 

@@ -1,6 +1,7 @@
 <!-- src/components/LeftBar.svelte -->
 <script lang="ts">
-  import { Map, Activity, Settings, GraduationCap } from 'lucide-svelte';
+  // Added Calendar to the imports
+  import { Map, Activity, Settings, GraduationCap, Calendar } from 'lucide-svelte';
 </script>
 
 <div 
@@ -42,7 +43,8 @@
       {#each [
         { href: '/map', icon: Map, label: 'Map' },
         { href: '/colleges', icon: GraduationCap, label: 'Colleges' },
-        { href: '/activities', icon: Activity, label: 'Activities' }
+        { href: '/activities', icon: Activity, label: 'Activities' },
+        { href: '/calendar', icon: Calendar, label: 'Calendar' }
       ] as item}
         <a 
           href={item.href} 
