@@ -12,7 +12,9 @@ const config = {
     adapter: adapter({
       fallback: "index.html",
     }),
+    paths: {
+      base: /** @type {any} */ (process.env.BASE_PATH || '')
+    }
   },
 };
-
 export default config;
