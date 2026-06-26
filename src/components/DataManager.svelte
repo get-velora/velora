@@ -1,6 +1,4 @@
-<!-- src/components/DataManager.svelte -->
-<!-- Drop this anywhere (e.g. a settings panel or LeftBar popover) -->
-<!-- Gives the user export-to-JSON, import-from-JSON, and reset controls -->
+<!-- Data export/import/reset controls -->
 <script lang="ts">
   import { Download, Upload, Trash2, AlertTriangle } from 'lucide-svelte';
   import { saveStore, loadStore, clearAll } from '$lib/persist';
@@ -53,7 +51,7 @@
         if (parsed.activities) saveStore('activities', parsed.activities);
         if (parsed.calendar)   saveStore('calendar', parsed.calendar);
         importSuccess = true;
-        // Reload so all pages pick up the new data
+        // Reload to apply imported data
         setTimeout(() => window.location.reload(), 800);
       } catch (err: any) {
         importError = err.message || 'Invalid backup file.';

@@ -1,4 +1,4 @@
-<!-- src/components/DetailPanel.svelte -->
+<!-- Detail panel -->
 <script lang="ts">
   import { Lock, ArrowRight, ExternalLink, CheckCircle2, Circle, ChevronDown, ChevronUp } from 'lucide-svelte';
   import type { PathfinderNode, NodeResource } from '../lib/types';
@@ -38,9 +38,8 @@
 
 <div class="w-full md:w-80 lg:w-[400px] h-auto md:h-full bg-zinc-950/20 flex flex-col shrink-0 relative z-10 border-t md:border-t-0 border-white/10 overflow-y-auto overscroll-contain scrollbar-thin select-text min-w-0 break-words">
 
-  <!-- Header Section -->
   <div class="p-6 md:p-8 lg:p-10 pb-6 border-b border-white/5 space-y-6">
-    <!-- Status Badges -->
+    <!-- Status badges -->
     <div class="flex flex-wrap gap-2.5">
       {#if selectedNode.status === 'completed'}
         <span class="inline-flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-emerald-400 bg-emerald-950/30 border border-emerald-900/50 px-3 py-1 rounded-full">
@@ -67,7 +66,7 @@
       {/if}
     </div>
 
-    <!-- Title & Description -->
+    <!-- Title and description -->
     <div class="space-y-3">
       <h2 class="text-xl md:text-2xl font-semibold tracking-tight text-zinc-100 leading-tight">
         {selectedNode.title}
@@ -78,7 +77,7 @@
     </div>
   </div>
 
-  <!-- Resource Progress Bar (Updated to Green) -->
+  <!-- Resource progress -->
   {#if totalResources > 0}
     <div class="px-6 md:px-8 lg:px-10 py-5 border-b border-white/5">
       <div class="flex items-center justify-between mb-2.5">
@@ -94,7 +93,7 @@
     </div>
   {/if}
 
-  <!-- Resources List -->
+  <!-- Resources list -->
   <div class="flex-1 min-h-0">
     {#if totalResources > 0}
       <button
@@ -170,7 +169,7 @@
     {/if}
   </div>
 
-  <!-- Footer Action -->
+  <!-- Footer actions -->
   <div class="mt-auto shrink-0">
     {#if !isUnlocked}
       <div class="p-6 md:p-8 lg:px-10 border-t border-white/5 bg-black/20">

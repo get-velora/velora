@@ -1,4 +1,4 @@
-<!-- src/routes/map/+page.svelte -->
+<!-- Map page -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { ChevronDown } from 'lucide-svelte';
@@ -11,11 +11,7 @@
   import SkillTreeCanvas from '../../components/SkillTreeCanvas.svelte';
   import DetailPanel from '../../components/DetailPanel.svelte';
 
-  // ── Hydrate nodes from localStorage on mount ──────────────
-  // Static content (title, description, icon, resources list)
-  // always comes from nodesData.ts. We only persist & restore:
-  //   • node.status
-  //   • which resource IDs are completed
+  // Hydrate nodes with persisted statuses and resource completions
   function hydrateNodes() {
     const saved = loadStore<MapStore>('map', []);
     if (!saved.length) return initialNodes.map(n => ({
@@ -62,7 +58,7 @@
     nodes.find(n => n.id === selectedNode.id) || nodes[0]
   );
 
-  // ── Auto-save whenever nodes changes ──────────────────────
+  // Auto-save nodes
   $effect(() => {
     saveStore('map', serializeNodes(nodes));
   });

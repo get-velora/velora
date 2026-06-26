@@ -1,4 +1,4 @@
-<!-- src/routes/activities/+page.svelte -->
+<!-- Activities page -->
 <script lang="ts">
   import { Plus, Trash2 } from 'lucide-svelte';
   import { saveStore, loadStore } from '$lib/persist';
@@ -21,13 +21,12 @@
     }
   ];
 
-  // ── Persist ───────────────────────────────────────────────
+  // Persist activities to storage
   let activities = $state<ActivityItem[]>(loadStore<ActivityItem[]>('activities', DEFAULT));
 
   $effect(() => {
     saveStore('activities', activities);
   });
-  // ─────────────────────────────────────────────────────────
 
   let newTitle = $state('');
   let newRole = $state('');

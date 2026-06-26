@@ -1,4 +1,4 @@
-<!-- src/routes/+layout.svelte -->
+<!-- App layout -->
 <script lang="ts">
   import '../app.css';
   import { page } from '$app/state'; 
@@ -6,10 +6,10 @@
 
   let { children } = $props();
 
-  // Defined app routes array for view management
+  // App routes
   const APP_ROUTES = ['/map', '/activities', '/colleges', '/calendar', '/documents', '/settings'];
 
-  // Derived state checking if current route belongs inside the app core
+  // Derived state: whether current route is inside the app
   const isAppRoute = $derived(
     APP_ROUTES.some(route => page.url.pathname.startsWith(route))
   );
@@ -21,7 +21,7 @@
 
 <div class="h-screen w-full flex flex-row overflow-hidden bg-black select-none">
   {#if isAppRoute}
-    <!-- Current pathname dictates the "active" state inside LeftBar -->
+    <!-- Current pathname sets active LeftBar state -->
     <LeftBar currentPath={page.url.pathname} />
   {/if}
   

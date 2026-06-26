@@ -7,12 +7,10 @@ import {
     Music, Code, Heart, Building, PenTool, BarChart
 } from 'lucide-svelte';
 
-// ─────────────────────────────────────────────
-// PLACEHOLDER TEXT — easy to find & replace
-// ─────────────────────────────────────────────
-
+// Placeholder description for resources
 const PLACEHOLDER_DESC = '';
 
+// Helper: create a resource object
 function res(id: string, title: string, url: string, type: NodeResource['type']) {
     return {
         id,
@@ -24,14 +22,12 @@ function res(id: string, title: string, url: string, type: NodeResource['type'])
     };
 }
 
-// Import type here so the helper above works
+// Import resource type
 import type { NodeResource } from './types';
 
 export const nodes: PathfinderNode[] = [
 
-    // ════════════════════════════════════════
-    // PHASE 1 — SELF ASSESSMENT (Levels 0–1)
-    // ════════════════════════════════════════
+    // Phase 1 — Self assessment (levels 0–1)
 
     {
         id: 'node-0',
@@ -111,9 +107,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 2 — COLLEGE LIST (Levels 2–3)
-    // ════════════════════════════════════════
+    // Phase 2 — College list (levels 2–3)
 
     {
         id: 'node-2',
@@ -229,9 +223,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 3 — TESTING (Levels 4–5)
-    // ════════════════════════════════════════
+    // Phase 3 — Testing (levels 4–5)
 
     {
         id: 'node-4',
@@ -311,9 +303,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 4 — ACADEMICS & COURSEWORK (Level 6)
-    // ════════════════════════════════════════
+    // Phase 4 — Academics & coursework (level 6)
 
     {
         id: 'node-6',
@@ -372,9 +362,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 5 — EXTRACURRICULARS (Levels 7–8)
-    // ════════════════════════════════════════
+    // Phase 5 — Extracurriculars (levels 7–8)
 
     {
         id: 'node-7',
@@ -494,9 +482,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 6 — ESSAYS (Levels 9–11)
-    // ════════════════════════════════════════
+    // Phase 6 — Essays (levels 9–11)
 
     {
         id: 'node-9',
@@ -670,9 +656,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 7 — APPLICATIONS (Levels 12–13)
-    // ════════════════════════════════════════
+    // Phase 7 — Applications (levels 12–13)
 
     {
         id: 'node-12',
@@ -750,9 +734,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 8 — FINANCIAL AID (Level 14)
-    // ════════════════════════════════════════
+    // Phase 8 — Financial aid (level 14)
 
     {
         id: 'node-14',
@@ -813,9 +795,7 @@ export const nodes: PathfinderNode[] = [
         ],
     },
 
-    // ════════════════════════════════════════
-    // PHASE 9 — DECISIONS (Levels 15–16)
-    // ════════════════════════════════════════
+    // Phase 9 — Decisions (levels 15–16)
 
     {
         id: 'node-15',

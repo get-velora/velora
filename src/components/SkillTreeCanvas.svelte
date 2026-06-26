@@ -44,7 +44,7 @@
   let scrollResetTimeout: ReturnType<typeof setTimeout>;
   let lastProgrammaticScrollTime = 0;
 
-  // Responsive scale factor: scales canvas down if the container is narrower than MAP_WIDTH (520px)
+  // Responsive scale
   const scale = $derived(containerWidth < MAP_WIDTH ? Math.max(0.65, containerWidth / MAP_WIDTH) : 1);
 
   function updateCameraPhysics() {
@@ -91,7 +91,7 @@
     const scrollTimer = setTimeout(() => {
       if (!viewportContainer) return;
       const viewportHeight = viewportContainer.clientHeight;
-      // Offset center coordinate factoring in visual scale scale
+      // Offset center coordinate factoring in visual scale
       const targetScrollTop = (coords.y * scale) - (viewportHeight / 2);
 
       lastProgrammaticScrollTime = Date.now();
@@ -253,7 +253,7 @@
     onmouseleave={handleMouseLeave}
     class="w-full h-full overflow-y-auto overflow-x-hidden flex flex-col items-center py-12 select-none scroll-smooth hide-scrollbar"
   >
-    <!-- Applied adaptive scale factor & scale origins -->
+    <!-- Scaled canvas -->
     <div 
       class="relative z-10 will-change-transform origin-top" 
       style="
@@ -345,7 +345,7 @@
     </div>
   </div>
 
-  <!-- Custom Scrollbar Elements -->
+  <!-- Custom scrollbar -->
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div 
     class="absolute right-0 top-1 bottom-1 w-[2px] z-30 pointer-events-auto cursor-pointer"

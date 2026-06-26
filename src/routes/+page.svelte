@@ -32,7 +32,7 @@
   }
 </style>
 
-<!-- Main Container: flex items-center and min-h-screen ensures vertical centering on big screens -->
+<!-- Main container -->
 <div class="min-h-screen flex items-center justify-center bg-zinc-950 px-6 py-20">
   {#if showMobileWarning}
     <div class="fixed inset-0 z-50 flex items-end justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -55,7 +55,7 @@
   {/if}
   <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 max-w-[1600px] mx-auto w-full">
     
-    <!-- Left Column: Text & CTA -->
+    <!-- Left column: text and CTA -->
     <div class="w-full lg:w-[40%] xl:w-[35%] flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
       
       <div in:fly={{ y: 30, duration: 1200, delay: 400, easing: cubicOut }}>
@@ -74,7 +74,7 @@
         </p>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Action buttons -->
       <div in:fly={{ y: 20, duration: 1200, delay: 800, easing: cubicOut }} class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
         <a
           href="/map"
@@ -94,7 +94,7 @@
         </a>
       </div>
 
-      <!-- Stats Section -->
+      <!-- Stats -->
       <div
         in:fly={{ y: 20, duration: 1200, delay: 1000, easing: cubicOut }}
         class="flex items-center gap-8 pt-6 border-t border-white/5 w-full justify-center lg:justify-start"
@@ -111,7 +111,7 @@
       </div>
     </div>
 
-    <!-- Right Column: Browser Mockup -->
+    <!-- Right column: browser mockup -->
     <div
       in:fly={{ y: 40, duration: 1600, delay: 500, easing: cubicOut }}
       class="w-full lg:w-[60%] xl:w-[65%] flex items-center justify-center"
@@ -119,7 +119,7 @@
       <div
         class="relative w-full aspect-[16/10] bg-zinc-950 border border-zinc-800 rounded-xl shadow-[0_30px_80px_-15px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col"
       >
-        <!-- Browser Header -->
+        <!-- Browser header -->
         <div class="h-8 sm:h-10 w-full bg-zinc-900/50 border-b border-white/5 flex items-center justify-between px-4 shrink-0">
           <div class="flex items-center gap-1.5">
             <div class="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-zinc-700"></div>
@@ -138,11 +138,11 @@
           <div class="w-12"></div>
         </div>
 
-        <!-- Browser Viewport -->
+        <!-- Browser viewport -->
         <div class="flex-1 bg-zinc-950 relative overflow-hidden group">
           <div class="absolute inset-0 opacity-20 inner-grid-pattern"></div>
           <div class="absolute inset-0 flex items-center justify-center">
-            <!-- object-contain ensures the image is never cropped while the container maintains aspect ratio -->
+              <!-- Image fits within container -->
             <img 
               src={dashboardImage} 
               alt="Velora Dashboard" 

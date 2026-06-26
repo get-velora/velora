@@ -1,10 +1,4 @@
-// src/lib/persist.ts
-// ─────────────────────────────────────────────────────────────
-// Velora — accountless localStorage persistence layer
-// One versioned key per pillar. Bump STORE_VERSION if you ever
-// change the shape of a store so old data is cleanly discarded.
-// ─────────────────────────────────────────────────────────────
-
+// Persistence utilities for localStorage with versioned keys
 const STORE_VERSION = 1;
 
 // Added 'documents' to the valid keys
@@ -45,9 +39,7 @@ export function clearAll(): void {
     (['map', 'colleges', 'activities', 'calendar', 'documents'] as StoreKey[]).forEach(clearStore);
 }
 
-// ─────────────────────────────────────────────────────────────
-// Per-pillar shape definitions — what actually gets saved
-// ─────────────────────────────────────────────────────────────
+// Per-pillar data shapes
 
 // MAP
 export interface SavedNodeState {
@@ -95,7 +87,7 @@ export interface SavedCalendarEvent {
 }
 export type CalendarStore = SavedCalendarEvent[];
 
-// DOCUMENTS — The writing area persistence
+// DOCUMENTS: writing-area persistence
 export interface SavedDocument {
     id: string;
     title: string;
