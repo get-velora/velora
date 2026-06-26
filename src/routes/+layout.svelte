@@ -14,6 +14,11 @@
   );
 </script>
 
+<svelte:head>
+  <title>velora | Free and Open Source Application Manager</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+</svelte:head>
+
 <div class="h-screen w-full flex flex-row overflow-hidden bg-black select-none">
   {#if isAppRoute}
     <!-- Pass the current pathname to the LeftBar for the "active" state -->
