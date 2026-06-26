@@ -1,7 +1,9 @@
+<!-- src/routes/colleges/+page.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Plus, Trash2, ExternalLink, ChevronDown, Check, ChevronUp } from 'lucide-svelte';
-  import { Switch } from "bits-ui";
+  import { Switch } from 'bits-ui';
+  import { saveStore, loadStore } from '$lib/persist';
 
   interface College {
     id: number;
@@ -15,16 +17,25 @@
     isManual?: boolean;
   }
 
-  const userGpa = 3.7;
+  const userGpa  = 3.7;
   const userTest = 1300;
 
-  let universityDb = $state<any[]>([]);
-  let activeSuggestions = $state<any[]>([]);
-  let activeRowId = $state<number | null>(null);
-
-  let colleges = $state<College[]>([
+  const DEFAULT_COLLEGES: College[] = [
     { id: 1, name: 'Stanford University', status: 'Reach', cost: '$82,412', avgGpa: '3.96', avgTest: '1540', testOptional: true, url: 'https://stanford.edu' }
-  ]);
+  ];
+
+  // ── Persist ───────────────────────────────────────────────
+  let colleges = $state<College[]>(loadStore<College[]>('colleges', DEFAULT_COLLEGES));
+
+  $effect(() => {
+    saveStore('colleges', colleges);
+  });
+  // ─────────────────────────────────────────────────────────
+
+  let universityDb      = $state<any[]>([]);
+  let activeSuggestions = $state<any[]>([]);
+  let activeRowId       = $state<number | null>(null);
+  let openDropdownId    = $state<number | null>(null);
 
   onMount(async () => {
     try {
@@ -32,47 +43,43 @@
       if (!res.ok) throw new Error('File not found');
       universityDb = await res.json();
     } catch (e) {
-      console.error('Failed to load database.', e);
+      console.error('Failed to load university database.', e);
     }
   });
 
   function handleSearch(id: number, query: string) {
     if (!query || query.trim().length < 1) {
-      activeSuggestions = [];
-      activeRowId = null;
-      return;
+      activeSuggestions = []; activeRowId = null; return;
     }
     activeRowId = id;
     activeSuggestions = universityDb
       .filter(u => u.n?.toLowerCase().includes(query.toLowerCase()))
-      .slice(0, 8); 
+      .slice(0, 8);
   }
 
   function selectUniversity(rowId: number, uni: any) {
     const index = colleges.findIndex(c => c.id === rowId);
     if (index !== -1) {
-      colleges[index].name = uni.n || '';
-      colleges[index].url = uni.u || '';
-      colleges[index].avgGpa = uni.g || '';
-      colleges[index].avgTest = uni.t || '';
-      colleges[index].cost = uni.c || '';
-      colleges[index].testOptional = uni.o === true || uni.o === "true";
-      colleges[index].isManual = false;
+      colleges[index].name         = uni.n   || '';
+      colleges[index].url          = uni.u   || '';
+      colleges[index].avgGpa       = uni.g   || '';
+      colleges[index].avgTest      = uni.t   || '';
+      colleges[index].cost         = uni.c   || '';
+      colleges[index].testOptional = uni.o === true || uni.o === 'true';
+      colleges[index].isManual     = false;
     }
-    activeSuggestions = [];
-    activeRowId = null;
+    activeSuggestions = []; activeRowId = null;
   }
 
   $effect(() => {
     colleges.forEach(college => {
       if (college.isManual || !college.name) return;
-      const uniGpa = parseFloat(college.avgGpa) || 0;
+      const uniGpa  = parseFloat(college.avgGpa)  || 0;
       const uniTest = parseFloat(college.avgTest) || 0;
       if (!uniGpa || !uniTest) return;
-
       if (userGpa >= uniGpa + 0.1 && userTest >= uniTest + 50) college.status = 'Safety';
-      else if (userGpa < uniGpa || userTest < uniTest) college.status = 'Reach';
-      else college.status = 'Target';
+      else if (userGpa < uniGpa || userTest < uniTest)         college.status = 'Reach';
+      else                                                      college.status = 'Target';
     });
   });
 
@@ -84,25 +91,19 @@
     colleges = colleges.filter(c => c.id !== id);
   }
 
-  let openDropdownId = $state<number | null>(null);
-
-  // VIBRANT COLORS: Regular Cyan, Yellow, Green
   const statusOptions = [
-    { value: "Reach", label: "Reach", color: "text-cyan-400", bg: "hover:bg-cyan-400/20" },
-    { value: "Target", label: "Target", color: "text-yellow-400", bg: "hover:bg-yellow-400/20" },
-    { value: "Safety", label: "Safety", color: "text-green-500", bg: "hover:bg-green-500/20" },
+    { value: 'Reach',  label: 'Reach',  color: 'text-cyan-400',   bg: 'hover:bg-cyan-400/20'  },
+    { value: 'Target', label: 'Target', color: 'text-yellow-400', bg: 'hover:bg-yellow-400/20'},
+    { value: 'Safety', label: 'Safety', color: 'text-green-500',  bg: 'hover:bg-green-500/20' },
   ] as const;
 
   if (typeof window !== 'undefined') {
-    window.onclick = () => {
-      openDropdownId = null;
-      activeRowId = null;
-    };
+    window.onclick = () => { openDropdownId = null; activeRowId = null; };
   }
 </script>
 
 <div class="h-screen w-full flex flex-col bg-black text-zinc-300 selection:bg-zinc-800 arial-only">
-  
+
   <div class="px-8 py-8 flex justify-between items-end bg-black">
     <div class="flex gap-16">
       <div class="flex flex-col gap-1">
@@ -114,7 +115,6 @@
         <p class="text-3xl font-normal text-white leading-none">{userTest}</p>
       </div>
     </div>
-    
     <button onclick={addRow} class="h-10 px-6 bg-zinc-100 hover:bg-white text-black text-[11px] font-bold uppercase tracking-[0.1em] rounded-md flex items-center gap-2 transition-all active:scale-95">
       <Plus class="w-4 h-4" strokeWidth={3} /> Add University
     </button>
@@ -137,31 +137,28 @@
         {#each colleges as college (college.id)}
           <tr class="group hover:bg-zinc-900/40 transition-colors">
             <td class="p-0 border-b border-r border-zinc-900 relative overflow-visible">
-              <input 
-                bind:value={college.name} 
+              <input
+                bind:value={college.name}
                 oninput={(e) => handleSearch(college.id, e.currentTarget.value)}
-                onclick={(e) => e.stopPropagation()} 
-                class="w-full h-14 bg-transparent px-8 text-[14px] outline-none text-white placeholder:text-zinc-800" 
-                placeholder="Find institution..." 
+                onclick={(e) => e.stopPropagation()}
+                class="w-full h-14 bg-transparent px-8 text-[14px] outline-none text-white placeholder:text-zinc-800"
+                placeholder="Find institution..."
               />
-              
               {#if activeRowId === college.id && activeSuggestions.length > 0}
                 <div class="absolute -left-px top-full w-[calc(100%+1px)] bg-zinc-950 border border-zinc-800 z-[100] shadow-2xl">
                   {#each activeSuggestions as uni}
-                    <button 
+                    <button
                       onclick={() => selectUniversity(college.id, uni)}
                       class="w-full text-left px-8 py-3 text-[13px] hover:bg-white/10 text-zinc-300 hover:text-white transition-colors border-b border-zinc-900 last:border-0"
-                    >
-                      {uni.n}
-                    </button>
+                    >{uni.n}</button>
                   {/each}
                 </div>
               {/if}
             </td>
-            
+
             <td class="p-0 border-b border-r border-zinc-900 relative">
-              <button 
-                onclick={(e) => { e.stopPropagation(); openDropdownId = openDropdownId === college.id ? null : college.id }} 
+              <button
+                onclick={(e) => { e.stopPropagation(); openDropdownId = openDropdownId === college.id ? null : college.id; }}
                 class="w-full h-14 flex items-center justify-between px-4 outline-none"
               >
                 <span class="text-[12px] font-bold uppercase {statusOptions.find(o => o.value === college.status)?.color}">
@@ -174,7 +171,7 @@
                   {#each statusOptions as opt}
                     <button onclick={() => { college.status = opt.value; college.isManual = true; openDropdownId = null; }} class="w-full flex items-center justify-between px-3 py-3 text-[11px] font-bold uppercase rounded-sm {opt.bg} transition-colors">
                       <span class={opt.color}>{opt.label}</span>
-                      {#if college.status === opt.value} <Check class="w-4 h-4 text-white" /> {/if}
+                      {#if college.status === opt.value}<Check class="w-4 h-4 text-white" />{/if}
                     </button>
                   {/each}
                 </div>
@@ -239,20 +236,9 @@
 </div>
 
 <style>
-  /* Forced Arial implementation */
-  :global(.arial-only), 
-  :global(.arial-only *) {
-    font-family: Arial, Helvetica, sans-serif !important;
-  }
-
+  :global(.arial-only),
+  :global(.arial-only *) { font-family: Arial, Helvetica, sans-serif !important; }
   input::-webkit-inner-spin-button { display: none; }
-
-  /* Muted scrollbar */
-  .flex-1::-webkit-scrollbar {
-    width: 6px;
-  }
-  .flex-1::-webkit-scrollbar-thumb {
-    background: #27272a;
-    border-radius: 0px;
-  }
+  .flex-1::-webkit-scrollbar { width: 6px; }
+  .flex-1::-webkit-scrollbar-thumb { background: #27272a; border-radius: 0px; }
 </style>
