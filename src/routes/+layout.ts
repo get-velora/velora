@@ -1,3 +1,9 @@
+import { dev } from '$app/environment';
+import { injectAnalytics } from '@vercel/analytics/sveltekit';
+
+// Inject Vercel Web Analytics
+injectAnalytics({ mode: dev ? 'development' : 'production' });
+
 // Tauri doesn't have a Node.js server to do proper SSR
 // so we use adapter-static with a fallback to index.html to put the site in SPA mode
 // See: https://svelte.dev/docs/kit/single-page-apps
