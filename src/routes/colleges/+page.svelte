@@ -1,7 +1,6 @@
-<!-- src/routes/colleges/+page.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Plus, Trash2, ExternalLink, ChevronDown, Check, ChevronUp } from 'lucide-svelte';
+  import { Plus, Trash2, ExternalLink, ChevronDown, Check, ChevronUp, Pencil } from 'lucide-svelte';
   import { Switch } from 'bits-ui';
   import { saveStore, loadStore } from '$lib/persist';
 
@@ -17,20 +16,26 @@
     isManual?: boolean;
   }
 
-  const userGpa  = 3.7;
-  const userTest = 1300;
+  // ── Reactive State (Fixed Types for Squigglies) ──────────
+  
+  // Cast loadStore specifically to the type expected
+  let colleges = $state<College[]>(
+    (loadStore('colleges') as College[]) || [
+      { id: 1, name: 'Stanford University', status: 'Reach', cost: '$82,412', avgGpa: '3.96', avgTest: '1540', testOptional: true, url: 'https://stanford.edu' }
+    ]
+  );
 
-  const DEFAULT_COLLEGES: College[] = [
-    { id: 1, name: 'Stanford University', status: 'Reach', cost: '$82,412', avgGpa: '3.96', avgTest: '1540', testOptional: true, url: 'https://stanford.edu' }
-  ];
+  // Replace your current declarations with these:
+  let userGpa = $state<number>(Number(loadStore('userGpa' as any)) || 3.7);
+  let userTest = $state<number>(Number(loadStore('userTest' as any)) || 1300);
 
-  // ── Persist ───────────────────────────────────────────────
-  let colleges = $state<College[]>(loadStore<College[]>('colleges', DEFAULT_COLLEGES));
-
+  // Sync to storage
   $effect(() => {
     saveStore('colleges', colleges);
+    saveStore('userGpa', userGpa);
+    saveStore('userTest', userTest);
   });
-  // ─────────────────────────────────────────────────────────
+  // ────────────────────────────────────────────────────────────
 
   let universityDb      = $state<any[]>([]);
   let activeSuggestions = $state<any[]>([]);
@@ -77,9 +82,10 @@
       const uniGpa  = parseFloat(college.avgGpa)  || 0;
       const uniTest = parseFloat(college.avgTest) || 0;
       if (!uniGpa || !uniTest) return;
+      
       if (userGpa >= uniGpa + 0.1 && userTest >= uniTest + 50) college.status = 'Safety';
       else if (userGpa < uniGpa || userTest < uniTest)         college.status = 'Reach';
-      else                                                      college.status = 'Target';
+      else                                                     college.status = 'Target';
     });
   });
 
@@ -104,17 +110,40 @@
 
 <div class="h-screen w-full flex flex-col bg-black text-zinc-300 selection:bg-zinc-800 arial-only">
 
-  <div class="px-8 py-8 flex justify-between items-end bg-black">
-    <div class="flex gap-16">
-      <div class="flex flex-col gap-1">
-        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">Current GPA</p>
-        <p class="text-3xl font-normal text-white leading-none">{userGpa.toFixed(2)}</p>
+  <div class="px-8 py-10 flex justify-between items-end bg-black">
+    <div class="flex gap-20">
+      
+      <!-- GPA Input with Minimal Indicator -->
+      <div class="flex flex-col gap-2 group relative cursor-text">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 group-hover:text-zinc-400 transition-colors">Current GPA</p>
+        <div class="flex items-baseline gap-1">
+          <input 
+            type="number" 
+            step="0.01" 
+            bind:value={userGpa} 
+            class="w-20 bg-transparent text-4xl font-normal text-white leading-none outline-none border-none p-0 focus:text-zinc-100 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          />
+        </div>
+        <!-- Interaction Line: Expands on hover, glows on focus -->
+        <div class="absolute -bottom-2 left-0 h-[2px] w-6 bg-zinc-800 group-hover:w-full group-hover:bg-zinc-500 transition-all duration-300"></div>
       </div>
-      <div class="flex flex-col gap-1">
-        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">Current Test</p>
-        <p class="text-3xl font-normal text-white leading-none">{userTest}</p>
+
+      <!-- Test Input with Minimal Indicator -->
+      <div class="flex flex-col gap-2 group relative cursor-text">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 group-hover:text-zinc-400 transition-colors">Current Test</p>
+        <div class="flex items-baseline gap-1">
+          <input 
+            type="number" 
+            bind:value={userTest} 
+            class="w-28 bg-transparent text-4xl font-normal text-white leading-none outline-none border-none p-0 focus:text-zinc-100 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          />
+        </div>
+        <!-- Interaction Line -->
+        <div class="absolute -bottom-2 left-0 h-[2px] w-6 bg-zinc-800 group-hover:w-full group-hover:bg-zinc-500 transition-all duration-300"></div>
       </div>
+
     </div>
+
     <button onclick={addRow} class="h-10 px-6 bg-zinc-100 hover:bg-white text-black text-[11px] font-bold uppercase tracking-[0.1em] rounded-md flex items-center gap-2 transition-all active:scale-95">
       <Plus class="w-4 h-4" strokeWidth={3} /> Add University
     </button>
@@ -238,7 +267,17 @@
 <style>
   :global(.arial-only),
   :global(.arial-only *) { font-family: Arial, Helvetica, sans-serif !important; }
-  input::-webkit-inner-spin-button { display: none; }
+  
   .flex-1::-webkit-scrollbar { width: 6px; }
   .flex-1::-webkit-scrollbar-thumb { background: #27272a; border-radius: 0px; }
+
+  /* Smooth number input removal */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 </style>
