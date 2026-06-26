@@ -1,3 +1,4 @@
+<!-- src/routes/+layout.svelte -->
 <script lang="ts">
   import '../app.css';
   import { page } from '$app/state'; 
@@ -5,10 +6,10 @@
 
   let { children } = $props();
 
-  // Define your app routes in one clean array
+  // Defined app routes array for view management
   const APP_ROUTES = ['/map', '/activities', '/colleges', '/calendar', '/documents', '/settings'];
 
-  // Simplified derived logic
+  // Derived state checking if current route belongs inside the app core
   const isAppRoute = $derived(
     APP_ROUTES.some(route => page.url.pathname.startsWith(route))
   );
@@ -16,12 +17,11 @@
 
 <svelte:head>
   <title>velora | Free and Open Source Application Manager</title>
-  <link rel="icon" type="image/png" href="/favicon.png" />
 </svelte:head>
 
 <div class="h-screen w-full flex flex-row overflow-hidden bg-black select-none">
   {#if isAppRoute}
-    <!-- Pass the current pathname to the LeftBar for the "active" state -->
+    <!-- Current pathname dictates the "active" state inside LeftBar -->
     <LeftBar currentPath={page.url.pathname} />
   {/if}
   
