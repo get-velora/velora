@@ -11,7 +11,7 @@ import {
 // PLACEHOLDER TEXT — easy to find & replace
 // ─────────────────────────────────────────────
 
-const PLACEHOLDER_DESC = 'Resource description placeholder — replace with real content.';
+const PLACEHOLDER_DESC = 'Resource description  replace with real content.';
 
 function res(id: string, title: string, url: string, type: NodeResource['type']) {
     return {
@@ -36,7 +36,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-0',
         title: 'Start Here',
-        description: 'PLACEHOLDER — Welcome node. Orients the student to the college application process as an incoming senior.',
+        description: ' Welcome node. Orients the student to the college application process as an incoming senior.',
         status: 'completed',
         level: 0,
         position: 'center',
@@ -55,7 +55,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-1',
         title: 'Know Yourself',
-        description: 'PLACEHOLDER — Self-assessment of strengths, values, interests, and goals before building a college list.',
+        description: ' Self-assessment of strengths, values, interests, and goals before building a college list.',
         status: 'completed',
         level: 1,
         position: 'center',
@@ -74,7 +74,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-1-l',
         title: 'STEM Self-Audit',
-        description: 'PLACEHOLDER — Branch for students leaning toward STEM. Evaluate math/science strengths and research interests.',
+        description: ' Branch for students leaning toward STEM. Evaluate math/science strengths and research interests.',
         status: 'completed',
         level: 1,
         position: 'left',
@@ -94,7 +94,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-1-r',
         title: 'Humanities Self-Audit',
-        description: 'PLACEHOLDER — Branch for students leaning toward humanities/arts. Evaluate writing, critical thinking, and creative strengths.',
+        description: ' Branch for students leaning toward humanities/arts. Evaluate writing, critical thinking, and creative strengths.',
         status: 'completed',
         level: 1,
         position: 'right',
@@ -118,7 +118,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-2',
         title: 'Build Your College List',
-        description: 'PLACEHOLDER — Research and categorize schools into reach, target, and safety tiers based on stats and fit.',
+        description: ' Research and categorize schools into reach, target, and safety tiers based on stats and fit.',
         status: 'completed',
         level: 2,
         position: 'center',
@@ -137,7 +137,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-2-l',
         title: 'Public University Track',
-        description: 'PLACEHOLDER — Branch for students prioritizing in-state public universities and flagship schools.',
+        description: ' Branch for students prioritizing in-state public universities and flagship schools.',
         status: 'upcoming',
         level: 2,
         position: 'left',
@@ -156,7 +156,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-2-r',
         title: 'Private University Track',
-        description: 'PLACEHOLDER — Branch for students targeting private colleges including LACs and research universities.',
+        description: ' Branch for students targeting private colleges including LACs and research universities.',
         status: 'upcoming',
         level: 2,
         position: 'right',
@@ -175,7 +175,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-3',
         title: 'Campus Fit Research',
-        description: 'PLACEHOLDER — Go beyond rankings. Evaluate culture, size, location, programs, and student life fit.',
+        description: ' Go beyond rankings. Evaluate culture, size, location, programs, and student life fit.',
         status: 'current',
         level: 3,
         position: 'center',
@@ -194,7 +194,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-3-l',
         title: 'Urban Campus Track',
-        description: 'PLACEHOLDER — Branch for students who want city-based schools with internship and networking proximity.',
+        description: ' Branch for students who want city-based schools with internship and networking proximity.',
         status: 'upcoming',
         level: 3,
         position: 'left',
@@ -213,7 +213,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-3-r',
         title: 'Rural / College Town Track',
-        description: 'PLACEHOLDER — Branch for students drawn to tight-knit campus communities and residential college life.',
+        description: ' Branch for students drawn to tight-knit campus communities and residential college life.',
         status: 'upcoming',
         level: 3,
         position: 'right',
@@ -236,7 +236,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-4',
         title: 'Test Strategy',
-        description: 'PLACEHOLDER — Decide between SAT and ACT, set score targets, and plan test dates for senior year.',
+        description: ' Decide between SAT and ACT, set score targets, and plan test dates for senior year.',
         status: 'upcoming',
         level: 4,
         position: 'center',
@@ -255,7 +255,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-4-l',
         title: 'SAT Deep Dive',
-        description: 'PLACEHOLDER — Branch for SAT-focused students. Study plans, official prep, and score improvement strategies.',
+        description: ' Branch for SAT-focused students. Study plans, official prep, and score improvement strategies.',
         status: 'upcoming',
         level: 4,
         position: 'left',
@@ -275,7 +275,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-4-r',
         title: 'ACT Deep Dive',
-        description: 'PLACEHOLDER — Branch for ACT-focused students. Study plans, timing strategies, and science section prep.',
+        description: ' Branch for ACT-focused students. Study plans, timing strategies, and science section prep.',
         status: 'upcoming',
         level: 4,
         position: 'right',
@@ -295,7 +295,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-5',
         title: 'Test-Optional Decision',
-        description: 'PLACEHOLDER — Evaluate whether to submit test scores for each school on your list given your score range.',
+        description: ' Evaluate whether to submit test scores for each school on your list given your score range.',
         status: 'upcoming',
         level: 5,
         position: 'center',
@@ -318,7 +318,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-6',
         title: 'Senior Course Load',
-        description: 'PLACEHOLDER — Finalize senior year courses. Colleges expect a rigorous senior schedule — avoid senioritis traps.',
+        description: ' Finalize senior year courses. Colleges expect a rigorous senior schedule — avoid senioritis traps.',
         status: 'upcoming',
         level: 6,
         position: 'center',
@@ -337,7 +337,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-6-l',
         title: 'AP / IB Strategy',
-        description: 'PLACEHOLDER — Branch for students maximizing AP or IB course counts for selective admissions.',
+        description: ' Branch for students maximizing AP or IB course counts for selective admissions.',
         status: 'upcoming',
         level: 6,
         position: 'left',
@@ -356,7 +356,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-6-r',
         title: 'GPA Recovery Plan',
-        description: 'PLACEHOLDER — Branch for students with a dip in junior year who need to show an upward trend senior year.',
+        description: ' Branch for students with a dip in junior year who need to show an upward trend senior year.',
         status: 'upcoming',
         level: 6,
         position: 'right',
@@ -379,7 +379,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-7',
         title: 'EC Audit & Narrative',
-        description: 'PLACEHOLDER — Review all extracurriculars and shape them into a coherent narrative that shows depth and leadership.',
+        description: ' Review all extracurriculars and shape them into a coherent narrative that shows depth and leadership.',
         status: 'upcoming',
         level: 7,
         position: 'center',
@@ -398,7 +398,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-7-l',
         title: 'Research & Science ECs',
-        description: 'PLACEHOLDER — Branch for students with lab, research, or science competition experience.',
+        description: ' Branch for students with lab, research, or science competition experience.',
         status: 'upcoming',
         level: 7,
         position: 'left',
@@ -418,7 +418,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-7-r',
         title: 'Arts & Creative ECs',
-        description: 'PLACEHOLDER — Branch for students with performing arts, visual arts, or creative writing portfolios.',
+        description: ' Branch for students with performing arts, visual arts, or creative writing portfolios.',
         status: 'upcoming',
         level: 7,
         position: 'right',
@@ -438,7 +438,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-8',
         title: 'Leadership & Impact',
-        description: 'PLACEHOLDER — Identify and articulate your most meaningful leadership moments and community impact.',
+        description: ' Identify and articulate your most meaningful leadership moments and community impact.',
         status: 'upcoming',
         level: 8,
         position: 'center',
@@ -457,7 +457,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-8-l',
         title: 'Tech & Coding ECs',
-        description: 'PLACEHOLDER — Branch for students with coding projects, hackathons, or open-source contributions.',
+        description: ' Branch for students with coding projects, hackathons, or open-source contributions.',
         status: 'upcoming',
         level: 8,
         position: 'left',
@@ -477,7 +477,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-8-r',
         title: 'Advocacy & Social Impact',
-        description: 'PLACEHOLDER — Branch for students driven by social justice, civic engagement, or nonprofit work.',
+        description: ' Branch for students driven by social justice, civic engagement, or nonprofit work.',
         status: 'upcoming',
         level: 8,
         position: 'right',
@@ -501,7 +501,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-9',
         title: 'CommonApp Personal Statement',
-        description: 'PLACEHOLDER — Brainstorm, draft, and refine the 650-word personal statement — the heart of your application.',
+        description: ' Brainstorm, draft, and refine the 650-word personal statement — the heart of your application.',
         status: 'upcoming',
         level: 9,
         position: 'center',
@@ -520,7 +520,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-9-l',
         title: 'Identity & Background Essays',
-        description: 'PLACEHOLDER — Branch for students writing about cultural identity, immigrant experience, or first-gen background.',
+        description: ' Branch for students writing about cultural identity, immigrant experience, or first-gen background.',
         status: 'upcoming',
         level: 9,
         position: 'left',
@@ -539,7 +539,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-9-r',
         title: 'Overcoming Adversity Essays',
-        description: 'PLACEHOLDER — Branch for students whose story involves hardship, challenge, or significant personal obstacles.',
+        description: ' Branch for students whose story involves hardship, challenge, or significant personal obstacles.',
         status: 'upcoming',
         level: 9,
         position: 'right',
@@ -558,7 +558,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-10',
         title: 'Supplement Essays',
-        description: 'PLACEHOLDER — Research and write supplemental essays for each school: "Why Us", "Why Major", and short takes.',
+        description: ' Research and write supplemental essays for each school: "Why Us", "Why Major", and short takes.',
         status: 'upcoming',
         level: 10,
         position: 'center',
@@ -577,7 +577,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-10-l',
         title: 'Ivy & T20 Supplements',
-        description: 'PLACEHOLDER — Branch for students applying to highly selective schools with unique multi-essay requirements.',
+        description: ' Branch for students applying to highly selective schools with unique multi-essay requirements.',
         status: 'upcoming',
         level: 10,
         position: 'left',
@@ -596,7 +596,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-10-r',
         title: 'UC Application Essays',
-        description: 'PLACEHOLDER — Branch for students applying to the University of California system (4 PIQs instead of CommonApp).',
+        description: ' Branch for students applying to the University of California system (4 PIQs instead of CommonApp).',
         status: 'upcoming',
         level: 10,
         position: 'right',
@@ -615,7 +615,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-11',
         title: 'Letters of Recommendation',
-        description: 'PLACEHOLDER — Identify, approach, and brief recommenders. Provide them a brag sheet and timeline.',
+        description: ' Identify, approach, and brief recommenders. Provide them a brag sheet and timeline.',
         status: 'upcoming',
         level: 11,
         position: 'center',
@@ -634,7 +634,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-11-l',
         title: 'Research Mentor Rec',
-        description: 'PLACEHOLDER — Branch for STEM students getting a rec from a professor, lab mentor, or research supervisor.',
+        description: ' Branch for STEM students getting a rec from a professor, lab mentor, or research supervisor.',
         status: 'upcoming',
         level: 11,
         position: 'left',
@@ -654,7 +654,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-11-r',
         title: 'Arts Portfolio Submission',
-        description: 'PLACEHOLDER — Branch for arts students submitting a portfolio or arts supplement alongside applications.',
+        description: ' Branch for arts students submitting a portfolio or arts supplement alongside applications.',
         status: 'upcoming',
         level: 11,
         position: 'right',
@@ -677,7 +677,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-12',
         title: 'Application Strategy',
-        description: 'PLACEHOLDER — Set deadlines, decide on ED/EA/RD for each school, and finalize your application calendar.',
+        description: ' Set deadlines, decide on ED/EA/RD for each school, and finalize your application calendar.',
         status: 'upcoming',
         level: 12,
         position: 'center',
@@ -696,7 +696,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-12-l',
         title: 'Early Decision Strategy',
-        description: 'PLACEHOLDER — Branch for students committing to an ED school. Understand the binding agreement and financial implications.',
+        description: ' Branch for students committing to an ED school. Understand the binding agreement and financial implications.',
         status: 'upcoming',
         level: 12,
         position: 'left',
@@ -715,7 +715,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-12-r',
         title: 'Regular Decision Planning',
-        description: 'PLACEHOLDER — Branch for students going RD-heavy. Maximize January apps and manage submission fatigue.',
+        description: ' Branch for students going RD-heavy. Maximize January apps and manage submission fatigue.',
         status: 'upcoming',
         level: 12,
         position: 'right',
@@ -734,7 +734,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-13',
         title: 'Submit & Follow Up',
-        description: 'PLACEHOLDER — Submit applications, confirm receipt, and manage portal logins and missing document requests.',
+        description: ' Submit applications, confirm receipt, and manage portal logins and missing document requests.',
         status: 'upcoming',
         level: 13,
         position: 'center',
@@ -757,7 +757,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-14',
         title: 'FAFSA & CSS Profile',
-        description: 'PLACEHOLDER — Complete the FAFSA and CSS Profile on time. Understand EFC, need-based aid, and merit aid.',
+        description: ' Complete the FAFSA and CSS Profile on time. Understand EFC, need-based aid, and merit aid.',
         status: 'upcoming',
         level: 14,
         position: 'center',
@@ -776,7 +776,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-14-l',
         title: 'Scholarships',
-        description: 'PLACEHOLDER — Branch for identifying and applying to external scholarships separate from school-based aid.',
+        description: ' Branch for identifying and applying to external scholarships separate from school-based aid.',
         status: 'upcoming',
         level: 14,
         position: 'left',
@@ -796,7 +796,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-14-r',
         title: 'Net Price & Loans',
-        description: 'PLACEHOLDER — Branch for understanding net price calculators, loan types, and realistic cost comparison.',
+        description: ' Branch for understanding net price calculators, loan types, and realistic cost comparison.',
         status: 'upcoming',
         level: 14,
         position: 'right',
@@ -820,7 +820,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-15',
         title: 'Decision Day Prep',
-        description: 'PLACEHOLDER — Compare acceptance letters, financial aid packages, and make a final school decision by May 1.',
+        description: ' Compare acceptance letters, financial aid packages, and make a final school decision by May 1.',
         status: 'upcoming',
         level: 15,
         position: 'center',
@@ -839,7 +839,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-15-l',
         title: 'Waitlist Strategy',
-        description: 'PLACEHOLDER — Branch for students waitlisted at a dream school. LOCI letters, updates, and managing hope vs reality.',
+        description: ' Branch for students waitlisted at a dream school. LOCI letters, updates, and managing hope vs reality.',
         status: 'upcoming',
         level: 15,
         position: 'left',
@@ -858,7 +858,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-15-r',
         title: 'Gap Year Planning',
-        description: 'PLACEHOLDER — Branch for students deferring enrollment or choosing a structured gap year instead.',
+        description: ' Branch for students deferring enrollment or choosing a structured gap year instead.',
         status: 'upcoming',
         level: 15,
         position: 'right',
@@ -877,7 +877,7 @@ export const nodes: PathfinderNode[] = [
     {
         id: 'node-16',
         title: 'Committed — What\'s Next',
-        description: 'PLACEHOLDER — You\'ve committed! Final steps: housing, orientation, scholarships to accept, and senior summer prep.',
+        description: ' You\'ve committed! Final steps: housing, orientation, scholarships to accept, and senior summer prep.',
         status: 'upcoming',
         level: 16,
         position: 'center',
