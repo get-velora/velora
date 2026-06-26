@@ -16,7 +16,7 @@
     isManual?: boolean;
   }
 
-  // ── State ──────────────────────────────────────────────────
+  // State
   
   const savedColleges = loadStore('colleges') as College[];
   let colleges = $state<College[]>(savedColleges || [
@@ -31,8 +31,7 @@
   let activeRowId       = $state<number | null>(null);
   let openDropdownId    = $state<number | null>(null);
 
-  // ── Elite School Detection ──────────────────────────────────
-  
+  // Elite school detection
   // Schools with these stats are statistically "Lottery" schools
   function isEliteSchool(avgGpa: string, avgTest: string): boolean {
     const g = parseFloat(avgGpa);
@@ -40,7 +39,7 @@
     return g >= 3.9 && t >= 1500;
   }
 
-  // ── Effects ──────────────────────────────────────────────────
+  // Effects
 
   $effect(() => {
     saveStore('colleges', colleges);
@@ -82,7 +81,7 @@
     }
   });
 
-  // ── Handlers ────────────────────────────────────────────────
+  // Handlers
 
   onMount(async () => {
     try {

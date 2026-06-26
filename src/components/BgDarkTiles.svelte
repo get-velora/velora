@@ -1,4 +1,4 @@
-<!-- src/components/BgDarkTiles.svelte -->
+<!-- Background tiled grid -->
 <script lang="ts">
   const tiles = Array.from({ length: 600 });
 </script>

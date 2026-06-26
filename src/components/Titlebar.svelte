@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getCurrentWindow } from "@tauri-apps/api/window"; // Tauri v2 API
+    import { getCurrentWindow } from "@tauri-apps/api/window"; // use Tauri window API
 
     const appWindow = getCurrentWindow();
 
@@ -11,16 +11,12 @@
     let status = "Local Sync Active";
 </script>
 
-<!-- 
-  TITLE BAR
-  - Changed border-white/[0.08] to border-zinc-800 (much more visible on black).
-  - Added a very subtle bg-zinc-950 just for the bar to help the border "pop".
--->
+<!-- Title bar with window controls -->
 <div
     data-tauri-drag-region
     class="h-10 bg-black flex items-center justify-between px-4 select-none cursor-default shrink-0 relative z-50 border-b border-zinc-800"
 >
-    <!-- Left Side: Branding & Breadcrumbs -->
+    <!-- Left: branding and breadcrumbs -->
     <div
         data-tauri-drag-region
         class="flex items-center gap-3 h-full"
@@ -32,17 +28,17 @@
             <span class="text-xs font-bold tracking-tight text-white">Velora</span>
         </div>
 
-        <!-- HIGH-VISIBILITY VERTICAL DIVIDER -->
+        <!-- Divider -->
         <div class="h-5 w-px bg-zinc-800 mx-1"></div>
 
-        <!-- Progress / View Status Area -->
+            <!-- View status -->
         <div class="flex items-center gap-3">
             <div class="flex flex-col">
                 <span class="text-[9px] uppercase tracking-widest text-zinc-500 leading-none mb-0.5">Location</span>
                 <span class="text-[11px] font-medium text-zinc-200 leading-none">{currentView}</span>
             </div>
             
-            <!-- ANOTHER DIVIDER -->
+            <!-- Divider -->
             <div class="h-4 w-px bg-zinc-800/60"></div>
 
             <div class="flex items-center gap-1.5">
@@ -52,10 +48,10 @@
         </div>
     </div>
 
-    <!-- Right Side: Window Actions -->
+    <!-- Right: window actions -->
     <div class="flex items-center h-full">
         
-        <!-- DIVIDER BEFORE ACTIONS -->
+        <!-- Divider before actions -->
         <div class="h-5 w-px bg-zinc-800 mr-3"></div>
 
         <div class="flex items-center gap-0.5">

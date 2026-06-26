@@ -43,10 +43,10 @@
     transition:slide={{ duration: 320 }}
     class="w-full h-auto bg-black/90 backdrop-blur-md border-b border-white/10 p-5 md:p-7 flex flex-col justify-between relative z-40 shrink-0 shadow-[0_12px_40px_rgba(0,0,0,0.85)] font-roboto"
   >
-    <!-- Seamless progressive blur projection overlay -->
+    <!-- Blur overlay -->
     <div class="absolute left-0 right-0 top-full h-32 bg-gradient-to-b from-black/80 via-black/20 to-transparent backdrop-blur-[8px] pointer-events-none z-30" style="mask-image: linear-gradient(to bottom, black 0%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);"></div>
 
-    <!-- Dismiss Button -->
+    <!-- Dismiss button -->
     <button 
       onclick={() => show = false}
       class="absolute top-4 right-4 text-white/40 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-md focus:outline-none z-50"
@@ -55,10 +55,10 @@
       <X class="w-4 h-4" />
     </button>
 
-    <!-- Main Content Container: pr-12 ensures clearance of the X button -->
+    <!-- Main content (pr-12 clears close button) -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pr-12">
       
-      <!-- Left Side: Famous Quote -->
+      <!-- Quote -->
       <div class="space-y-2 max-w-2xl">
         <h1 class="text-base md:text-xl lg:text-2xl font-medium tracking-tight text-white leading-tight">
           "{selected.quote}"
@@ -68,7 +68,7 @@
         </p>
       </div>
 
-      <!-- Right Side: Progress Indicator -->
+      <!-- Progress -->
       <div class="flex flex-col items-start md:items-end gap-2 shrink-0 min-w-[160px]">
         <span class="text-[9px] md:text-[10px] tracking-[0.15em] text-white/40 font-bold">
           Current Progress

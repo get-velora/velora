@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Map, Activity, Settings, GraduationCap, Calendar, FileText } from 'lucide-svelte';
 
-  // Receive the current path from the layout
+  // Receive current path from layout
   let { currentPath = '' } = $props();
 
   const navItems = [
@@ -14,12 +14,9 @@
 </script>
 
 <div class="w-10 shrink-0 relative z-50 group" style="height: 100vh;">
-  <!-- Changed bg-zinc-900 to bg-black here -->
   <aside class="absolute left-0 top-0 h-full w-10 group-hover:w-48 bg-black border-r border-white/10 flex flex-col justify-between pt-3 pb-4 select-none overflow-hidden transition-[width] duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
-    <!-- Removed the backdrop-blur div as it might cause color inconsistency if not carefully managed -->
-    <!-- <div class="absolute inset-0 bg-zinc-950/60 backdrop-blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div> -->
 
-    <!-- Top Logo -->
+    <!-- Top logo -->
     <div class="relative z-10 w-full px-1.5 shrink-0">
       <div class="flex items-center h-10 w-full px-1">
         <div class="w-7 flex justify-start items-center shrink-0">
@@ -38,7 +35,7 @@
           class="group/item relative flex items-center h-9 w-full transition-colors duration-75 px-1 
           {currentPath.startsWith(item.href) ? 'text-white' : 'text-zinc-500 hover:text-white'}"
         >
-          <!-- INDICATOR: Always visible if active, otherwise shows on hover -->
+          <!-- Active indicator -->
           <div class="absolute left-0 w-[1.5px] h-4 bg-white transition-transform duration-75 origin-center 
             {currentPath.startsWith(item.href) ? 'scale-y-100' : 'scale-y-0 group-hover/item:scale-y-100'}">
           </div>

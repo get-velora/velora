@@ -1,19 +1,19 @@
 <script lang="ts">
   import { Plus, File, Trash2, ChevronLeft, ChevronRight } from 'lucide-svelte';
-  // Import the persistence logic
+  // Persistence for documents
   import { loadStore, saveStore, type DocumentsStore } from '$lib/persist';
 
-  // 1. Initialize 'docs' from localStorage using loadStore
+  // Initialize documents from storage
   let docs = $state<DocumentsStore>(loadStore('documents', [
     { id: '1', title: 'Personal Statement', content: '' },
     { id: '2', title: 'Supplemental Essay', content: '' }
   ]));
 
-  // 2. Initialize activeId based on loaded data
+  // Initialize active document id
   let activeId = $state(docs[0]?.id || '1');
   let showSidebar = $state(true);
 
-  // 3. This effect runs every time 'docs' changes, saving it to localStorage
+  // Save documents whenever they change
   $effect(() => {
     saveStore('documents', docs);
   });

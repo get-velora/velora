@@ -1,4 +1,4 @@
-<!-- src/routes/calendar/+page.svelte -->
+<!-- Calendar page -->
 <script lang="ts">
   import { saveStore, loadStore } from '$lib/persist';
 
@@ -13,7 +13,7 @@
     { id: "2", title: "FAFSA Opens",    date: "2026-11-01" },
   ];
 
-  // ── State ───────────────────────────────────────────────
+  // State
   let events = $state<CalendarEvent[]>(loadStore<CalendarEvent[]>('calendar', DEFAULT_EVENTS));
   
   $effect(() => {
@@ -57,7 +57,7 @@
     return days;
   });
 
-  // ── Actions ──────────────────────────────────────────────
+  // Actions
   function changeMonth(step: number) {
     let tm = viewMonth + step;
     let ty = viewYear;
@@ -193,7 +193,7 @@
     padding: 20px 40px; box-sizing: border-box; 
   }
 
-  /* ── Header ────────────────────────────────────────────── */
+  /* Header */
   .controls { 
     display: flex; justify-content: space-between; align-items: center; 
     padding: 20px 0 30px 0; flex-shrink: 0; 
@@ -205,7 +205,7 @@
   }
   .year-label { color: #555; font-size: 16px; margin-top: 2px; display: block; }
 
-  /* ── Minimal Capsule ───────────────────────────────────── */
+  /* Minimal capsule */
   .capsule-nav {
     display: flex; align-items: center; background: #111; 
     border: 1px solid #222; border-radius: 50px; padding: 2px; height: 36px;
@@ -232,7 +232,7 @@
   }
   .add-deadline-btn:hover { opacity: 0.85; }
 
-  /* ── Calendar Grid ────────────────────────────────────── */
+  /* Calendar grid */
   .calendar-wrapper { 
     flex: 1; display: flex; flex-direction: column; 
     border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; 
@@ -273,7 +273,7 @@
   }
   .more-tag { font-size: 10px; color: #333; margin-top: 2px; }
 
-  /* ── Details Tooltip ──────────────────────────────────── */
+  /* Details tooltip */
   .floating-details { 
     position: absolute; top: -5px; left: 50%; 
     transform: translateX(-50%); width: 200px; z-index: 50; pointer-events: none; 
@@ -288,7 +288,7 @@
   .delete-event-btn { background: none; border: none; color: #444; cursor: pointer; font-size: 10px; }
   .delete-event-btn:hover { color: #fff; }
 
-  /* ── Modal ────────────────────────────────────────────── */
+  /* Modal */
   .modal-overlay { 
     position: fixed; inset: 0; background: rgba(0,0,0,0.85); 
     display: flex; align-items: center; justify-content: center; z-index: 1000; 
