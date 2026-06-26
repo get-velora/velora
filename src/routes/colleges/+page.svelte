@@ -169,7 +169,7 @@
     </div>
 
     <button onclick={addRow} class="h-10 px-6 bg-zinc-100 hover:bg-white text-black text-[11px] font-bold uppercase tracking-[0.1em] rounded-md flex items-center gap-2 transition-all active:scale-95">
-      <Plus class="w-4 h-4" strokeWidth={3} /> Add University
+      <Plus class="w-4 h-4" strokeWidth={3} /> Add College
     </button>
   </div>
 
